@@ -1,7 +1,6 @@
 package algo
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -26,20 +25,23 @@ func TestList(t *testing.T) {
 	n.Append(&List{
 		data: 2,
 	})
+	n.Append(&List{
+		data: 2,
+	})
 
-	//O(n)
-	n.RemoveDuplicate()
 
-	if n.length != 3 {
-		t.Error("dosen't remove duplicates")
+	n.RemoveDuplicateCounted(3)
+	if n.length != 2 {
+		t.Error("dosen't remove")
 	}
 
-	currentPost := n.start
-	for currentPost.data != 0 {
-		fmt.Println(currentPost.data)
-		if currentPost.next == nil {
-			break
-		}
-		currentPost = currentPost.next
-	}
+	//if you want to see a result
+	//currentPost := n.start
+	//for currentPost.data != 0 {
+	//	fmt.Println(currentPost.data)
+	//	if currentPost.next == nil {
+	//		break
+	//	}
+	//	currentPost = currentPost.next
+	//}
 }

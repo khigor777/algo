@@ -14,56 +14,98 @@ type Node struct {
 	start  *List
 }
 
-func (f *Node) Append(list *List) {
-	if f.length == 0 {
-		f.start = list
+//add to the end
+func (n *Node) Append(list *List) {
+	if n.length == 0 {
+		n.start = list
 	} else {
-		currentPost := f.start
-		for currentPost.next != nil {
-			currentPost = currentPost.next
+		current := n.start
+		for current.next != nil {
+			current = current.next
 		}
-		currentPost.next = list
+		current.next = list
 	}
-	f.length++
+	n.length++
 }
-
-func (f *Node) Remove(data int64) {
-	if f.length == 0 {
+//remove one
+func (n *Node) Remove(data int64) {
+	if n.length == 0 {
 		panic(errors.New("node is empty"))
 	}
 
-	var previousPost *List
-	currentPost := f.start
+	var previous *List
+	current := n.start
 
-	for currentPost.data != data {
-		if currentPost.next == nil {
+	for current.data != data {
+		if current.next == nil {
 			panic(errors.New("no such list found"))
 		}
 
-		previousPost = currentPost
-		currentPost = currentPost.next
+		previous = current
+		current = current.next
 	}
-	previousPost.next = currentPost.next
+	previous.next = current.next
 
-	f.length--
+	n.length--
 }
-
-func (f *Node) RemoveDuplicate() {
-	var previousPost *List
-	currentPost := f.start
+//remove all duplicates
+func (n *Node) RemoveDuplicate() {
+	var previous *List
+	current := n.start
 	hash := make(map[int64]int)
 
-	for currentPost != nil {
-		if currentPost == nil {
+	for current != nil {
+		if current == nil {
 			break
 		}
-		if val, ok := hash[currentPost.data]; ok && val >= 2 {
-			previousPost.next = currentPost.next
-			f.length--
+		if _, ok := hash[current.data]; ok {
+			previous.next = current.next
+			n.length--
 		} else {
-			hash[currentPost.data]++
-			previousPost = currentPost
+			hash[current.data]++
+			previous = current
 		}
-		currentPost = currentPost.next
+		current = current.next
 	}
+}
+
+//removes founded num count duplicates
+func (n *Node) RemoveDuplicateCounted(num int) {
+	for k := range n.getCountedDuplicates(num) {
+		var previous *List
+		current := n.start
+		hash := make(map[int64]int)
+
+		for current != nil {
+			if current == nil {
+				break
+			}
+			if current.data == k {
+				previous.next = current.next
+				n.length--
+			} else {
+				hash[current.data]++
+				previous = current
+			}
+			current = current.next
+		}
+	}
+
+}
+
+func (n *Node) getCountedDuplicates(num int)map[int64]bool {
+	hash := make(map[int64]int)
+	res := make(map[int64]bool)
+	current := n.start
+	for current.data != 0 {
+		if current.next == nil {
+			break
+		}
+		hash[current.data]++
+		if val, _ := hash[current.data] ; val >= num {
+			res[current.data] = true
+		}
+		current = current.next
+	}
+	return res
 }
