@@ -27,6 +27,7 @@ func (n *Node) Append(list *List) {
 	}
 	n.length++
 }
+
 //remove one
 func (n *Node) Remove(data int64) {
 	if n.length == 0 {
@@ -48,6 +49,7 @@ func (n *Node) Remove(data int64) {
 
 	n.length--
 }
+
 //remove all duplicates
 func (n *Node) RemoveDuplicate() {
 	var previous *List
@@ -81,6 +83,11 @@ func (n *Node) RemoveDuplicateCounted(num int) {
 				break
 			}
 			if current.data == k {
+				if previous == nil {
+					previous = current
+					n.length++
+					continue
+				}
 				previous.next = current.next
 				n.length--
 			} else {
@@ -93,17 +100,17 @@ func (n *Node) RemoveDuplicateCounted(num int) {
 
 }
 
-func (n *Node) getCountedDuplicates(num int)map[int64]bool {
+func (n *Node) getCountedDuplicates(num int) map[int64]bool {
 	hash := make(map[int64]int)
 	res := make(map[int64]bool)
 	current := n.start
 	for current.data != 0 {
+		hash[current.data]++
+		if val, _ := hash[current.data]; val >= num {
+			res[current.data] = true
+		}
 		if current.next == nil {
 			break
-		}
-		hash[current.data]++
-		if val, _ := hash[current.data] ; val >= num {
-			res[current.data] = true
 		}
 		current = current.next
 	}
