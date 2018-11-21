@@ -7,6 +7,9 @@ type Item struct {
 
 
 func reverseList(ItemList *Item) *Item {
+	if ItemList == nil{
+		return nil
+	}
 	current := ItemList
 	var top *Item = nil
 	for {

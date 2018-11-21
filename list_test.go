@@ -10,6 +10,7 @@ func TestList(t *testing.T) {
 	n.Append(&Item{
 		data: 1,
 	})
+<<<<<<< HEAD
 	n.Append(&Item{
 		data: 2,
 	})
@@ -20,6 +21,18 @@ func TestList(t *testing.T) {
 
 	n.Append(&Item{
 		data: 2,
+=======
+	n.Append(&List{
+		data: 1,
+	})
+
+	n.Append(&List{
+		data: 1,
+	})
+
+	n.Append(&List{
+		data: 1,
+>>>>>>> 69f03f274b861b5b28c01f1868f410f822bb346d
 	})
 
 	n.Append(&Item{
@@ -28,11 +41,10 @@ func TestList(t *testing.T) {
 	n.Append(&Item{
 		data: 2,
 	})
-
 
 	n.RemoveDuplicateCounted(3)
-	if n.length != 2 {
-		t.Error("dosen't remove")
+	if n.length != 3 {
+		t.Error("dosen't remove", n.length)
 	}
 
 	//if you want to see a result
