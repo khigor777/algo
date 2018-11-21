@@ -5,27 +5,27 @@ import (
 )
 
 func TestList(t *testing.T) {
-	n := new(Node)
+	n := new(Nodes)
 
-	n.Append(&List{
+	n.Append(&Item{
 		data: 1,
 	})
-	n.Append(&List{
+	n.Append(&Item{
 		data: 2,
 	})
 
-	n.Append(&List{
+	n.Append(&Item{
 		data: 3,
 	})
 
-	n.Append(&List{
+	n.Append(&Item{
 		data: 2,
 	})
 
-	n.Append(&List{
+	n.Append(&Item{
 		data: 2,
 	})
-	n.Append(&List{
+	n.Append(&Item{
 		data: 2,
 	})
 

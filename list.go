@@ -4,18 +4,18 @@ import (
 	"errors"
 )
 
-type List struct {
+type Item struct {
 	data int64
-	next *List
+	next *Item
 }
 
-type Node struct {
+type Nodes struct {
 	length int
-	start  *List
+	start  *Item
 }
 
 //add to the end
-func (n *Node) Append(list *List) {
+func (n *Nodes) Append(list *Item) {
 	if n.length == 0 {
 		n.start = list
 	} else {
@@ -28,12 +28,12 @@ func (n *Node) Append(list *List) {
 	n.length++
 }
 //remove one
-func (n *Node) Remove(data int64) {
+func (n *Nodes) Remove(data int64) {
 	if n.length == 0 {
 		panic(errors.New("node is empty"))
 	}
 
-	var previous *List
+	var previous *Item
 	current := n.start
 
 	for current.data != data {
@@ -49,8 +49,8 @@ func (n *Node) Remove(data int64) {
 	n.length--
 }
 //remove all duplicates
-func (n *Node) RemoveDuplicate() {
-	var previous *List
+func (n *Nodes) RemoveDuplicate() {
+	var previous *Item
 	current := n.start
 	hash := make(map[int64]int)
 
@@ -70,9 +70,9 @@ func (n *Node) RemoveDuplicate() {
 }
 
 //removes founded num count duplicates
-func (n *Node) RemoveDuplicateCounted(num int) {
+func (n *Nodes) RemoveDuplicateCounted(num int) {
 	for k := range n.getCountedDuplicates(num) {
-		var previous *List
+		var previous *Item
 		current := n.start
 		hash := make(map[int64]int)
 
@@ -93,7 +93,7 @@ func (n *Node) RemoveDuplicateCounted(num int) {
 
 }
 
-func (n *Node) getCountedDuplicates(num int)map[int64]bool {
+func (n *Nodes) getCountedDuplicates(num int)map[int64]bool {
 	hash := make(map[int64]int)
 	res := make(map[int64]bool)
 	current := n.start
